@@ -1,0 +1,13 @@
+streamlit>=1.28.0
+streamlit-lottie>=0.0.5
+python-pptx>=0.6.21
+pathlib>=1.0.1
+typing-extensions>=4.0.0
+
+# Optional: For enhanced error tracking in production
+#sentry-sdk>=1.32.0
+
+# For development/testing
+#pytest>=7.4.0
+#black>=23.7.0
+#flake8>=6.0.0

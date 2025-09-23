@@ -10,5 +10,14 @@
   "model": "llama3.1",
   "ollama_timeout": 90,
   
-  "content_guidelines": "- Focus on practical, actionable information\n- Include specific examples, metrics, or data points where relevant\n- Make each point substantial and informative\n- Avoid generic or vague statements\n- Ensure content is professional and well-structured\n- Maintain logical flow between slides\n- Cover topic comprehensively without redundancy\n- For math topics: use equations, problem-solving steps, and examples\n- For coding topics: include short, runnable code snippets\n- For business topics: include metrics, case studies, and implementation strategies"
+  "content_guidelines": "- Focus on practical, actionable information\n- Include specific examples, metrics, or data points where relevant\n- Make each point substantial and informative\n- Avoid generic or vague statements\n- Ensure content is professional and well-structured\n- Maintain logical flow between slides\n- Cover topic comprehensively without redundancy\n- For math topics: use equations, problem-solving steps, and examples\n- For coding topics: include short, runnable code snippets\n- For business topics: include metrics, case studies, and implementation strategies",
+
+  "bullet_spacing": {
+    "space_before_first": 12,
+    "space_after_each": 12,
+    "space_before_each": 3,
+    "space_after_last": 8,
+    "bullet_indent": -18,
+    "text_indent": 18
+  }
 }

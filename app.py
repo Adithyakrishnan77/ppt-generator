@@ -396,16 +396,28 @@ def main():
     if st.session_state.generated_file and os.path.exists(st.session_state.generated_file):
         st.divider()
         st.subheader("📥 Download Your Presentation")
-        
+        # topic = st.session_state.get("topic", "Presentation")
+        import re
+
+        safe_topic = re.sub(r'[^a-zA-Z0-9_-]', '_', topic.strip()) or "Presentation"
+
         # Download button directly without metadata display
         try:
             with open(st.session_state.generated_file, "rb") as file:
                 file_data = file.read()
             
+            # st.download_button(
+            #     label="📥 Download PowerPoint",
+            #     data=file_data,
+            #     file_name=f"presentation_{int(time.time())}.pptx",
+            #     mime="application/vnd.openxmlformats-officedocument.presentationml.presentation",
+            #     key="download_presentation",
+            #     help="Click to download your generated presentation"
+            # )
             st.download_button(
                 label="📥 Download PowerPoint",
                 data=file_data,
-                file_name=f"presentation_{int(time.time())}.pptx",
+                file_name=f"{safe_topic}.pptx",   # ✅ name based on topic
                 mime="application/vnd.openxmlformats-officedocument.presentationml.presentation",
                 key="download_presentation",
                 help="Click to download your generated presentation"

@@ -270,7 +270,8 @@ def create_presentation(
     slide_data: List[Dict[str, Any]],
     template_path: Optional[str] = None,
     font_name: str = "Calibri",
-    font_size: int = 12
+    font_size: int = 12,
+    topic : str = "Presentation"
 ) -> str:
     """Create PowerPoint presentation with FIXED bullet point formatting"""
     
@@ -329,33 +330,30 @@ def create_presentation(
                                 text_frame = shape.text_frame
                                 text_frame.clear()  # Clear existing content
                                 
-                                # FIXED: Proper bullet point formatting
+                                # RELIABLE BULLET FIX: Manual bullets for all strategies
                                 for point_idx, point in enumerate(slide["points"]):
-                                    # Clean the point text (remove existing bullet symbols)
                                     point_text = point.strip()
+                                    # Clean any existing bullet symbols
                                     if point_text.startswith('•'):
                                         point_text = point_text[1:].strip()
                                     if point_text.startswith('-'):
                                         point_text = point_text[1:].strip()
                                     
-                                    # Add paragraph
                                     if point_idx == 0:
-                                        # Use the first paragraph
                                         p = text_frame.paragraphs[0]
                                     else:
-                                        # Add new paragraph
                                         p = text_frame.add_paragraph()
                                     
-                                    # Set bullet formatting
-                                    p.text = point_text
-                                    p.level = 0  # Top level bullet
+                                    # Add manual bullet - most reliable approach
+                                    p.text = f"• {point_text}"
+                                    p.level = 0
                                     p.space_after = Pt(6)
                                     
-                                    # Format the text
+                                    # Format the text runs
                                     for run in p.runs:
                                         run.font.name = font_name
                                         run.font.size = Pt(font_size)
-                                        run.font.color.rgb = RGBColor(0, 0, 0)  # Black text
+                                        run.font.color.rgb = RGBColor(0, 0, 0)
                                 
                                 content_added = True
                                 break
@@ -371,9 +369,10 @@ def create_presentation(
                             text_frame = shape.text_frame
                             text_frame.clear()
                             
-                            # Add bullet points
+                            # RELIABLE BULLET FIX for Strategy 2
                             for point_idx, point in enumerate(slide["points"]):
                                 point_text = point.strip()
+                                # Clean any existing bullet symbols
                                 if point_text.startswith('•'):
                                     point_text = point_text[1:].strip()
                                 if point_text.startswith('-'):
@@ -384,7 +383,8 @@ def create_presentation(
                                 else:
                                     p = text_frame.add_paragraph()
                                 
-                                p.text = point_text
+                                # Add manual bullet - consistent with Strategy 1
+                                p.text = f"• {point_text}"
                                 p.level = 0
                                 p.space_after = Pt(6)
                                 
@@ -413,6 +413,7 @@ def create_presentation(
                     
                     for point_idx, point in enumerate(slide["points"]):
                         point_text = point.strip()
+                        # Clean any existing bullet symbols
                         if point_text.startswith('•'):
                             point_text = point_text[1:].strip()
                         if point_text.startswith('-'):
@@ -423,7 +424,7 @@ def create_presentation(
                         else:
                             p = text_frame.add_paragraph()
                         
-                        p.text = f"• {point_text}"  # Manually add bullet
+                        p.text = f"• {point_text}"
                         p.level = 0
                         p.space_after = Pt(6)
                         
@@ -437,7 +438,14 @@ def create_presentation(
             prs.save(tmp_file.name)
             logger.info(f"Presentation saved to: {tmp_file.name}")
             return tmp_file.name
-            
+        # safe_topic = re.sub(r'[^a-zA-Z0-9_-]', '_', topic.strip()) or "Presentation"
+        # tmp_dir = tempfile.gettempdir()
+        # file_path = os.path.join(tmp_dir, f"{safe_topic}.pptx")
+
+        # prs.save(file_path)
+        # logger.info(f"Presentation saved to: {file_path}")
+        # return file_path
+   
     except Exception as e:
         raise PPTGenerationError(f"Failed to create presentation: {str(e)}")
 
